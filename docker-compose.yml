@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   grafana:
+    user: '$UID:$GID'
     container_name: 'grafana'
     build: './grafana'
     volumes:
