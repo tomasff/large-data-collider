@@ -1,0 +1,19 @@
+apiVersion: 1
+
+datasources:
+  - name: 'Timescale LDC'
+    type: 'postgresql'
+    version: 1
+    access: 'proxy'
+    isDefault: true
+    editable: false
+    orgId: 1
+    user: $DB_USER_GRAFANA
+    url: $DB_URL
+    databaseName: $DB_NAME
+    secureJsonData:
+      password: $DB_PASSWORD_GRAFANA
+    jsonData:
+      sslmode: 'disable'
+      postgresVersion: 10
+      timescaledb: true
