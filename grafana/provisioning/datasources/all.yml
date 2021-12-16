@@ -2,9 +2,7 @@ apiVersion: 1
 
 datasources:
   - name: 'Timescale LDC'
-    type: 'postgresql'
-    version: 1
-    access: 'proxy'
+    type: postgres
     isDefault: true
     editable: false
     orgId: 1
