@@ -46,12 +46,14 @@ COPY --from=builder-base $VENV_PATH $VENV_PATH
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
-# Migrations
 COPY alembic.ini /ldc/
 COPY ./alembic /ldc/alembic
 
 COPY ./ldc /ldc/ldc
-WORKDIR /ldc
 
+# Run migrations
+WORKDIR /ldc
 ENTRYPOINT /docker-entrypoint.sh $0 $@
-CMD [ "python", "ldc/bot.py" ]
+
+WORKDIR /ldc/ldc
+CMD [ "python", "bot.py" ]
