@@ -50,10 +50,7 @@ COPY alembic.ini /ldc/
 COPY ./alembic /ldc/alembic
 
 COPY ./ldc /ldc/ldc
-
-# Run migrations
 WORKDIR /ldc
-ENTRYPOINT /docker-entrypoint.sh $0 $@
 
-WORKDIR /ldc/ldc
-CMD [ "python", "bot.py" ]
+ENTRYPOINT /docker-entrypoint.sh $0 $@
+CMD [ "python", "-m",  "ldc.bot" ]
