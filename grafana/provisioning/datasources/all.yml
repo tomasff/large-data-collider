@@ -6,9 +6,10 @@ datasources:
     isDefault: true
     editable: false
     orgId: 1
+    uid: ldc
     user: $DB_USER_GRAFANA
     url: $DB_URL
-    databaseName: $DB_NAME
+    database: $DB_NAME
     secureJsonData:
       password: $DB_PASSWORD_GRAFANA
     jsonData:
