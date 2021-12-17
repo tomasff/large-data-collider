@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1639699122795,
+  "iteration": 1639701552384,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -75,7 +75,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 14,
+        "h": 13,
         "w": 24,
         "x": 0,
         "y": 0
@@ -147,7 +147,7 @@
         "h": 8,
         "w": 6,
         "x": 0,
-        "y": 14
+        "y": 13
       },
       "id": 6,
       "interval": "1s",
@@ -220,7 +220,7 @@
         "h": 8,
         "w": 5,
         "x": 6,
-        "y": 14
+        "y": 13
       },
       "id": 8,
       "options": {
@@ -301,7 +301,7 @@
         "h": 8,
         "w": 5,
         "x": 11,
-        "y": 14
+        "y": 13
       },
       "id": 10,
       "options": {
@@ -378,7 +378,7 @@
         "h": 8,
         "w": 6,
         "x": 16,
-        "y": 14
+        "y": 13
       },
       "id": 11,
       "options": {
@@ -423,9 +423,86 @@
       ],
       "title": "Events per channel",
       "type": "table"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "calculation": "mean",
+            "colorPalette": "interpolateSpectral",
+            "colorSpace": "rgb",
+            "groupBy": 60,
+            "invertPalette": false,
+            "nullValueColor": "rgb(155, 155, 155)"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 22,
+        "x": 0,
+        "y": 21
+      },
+      "id": 13,
+      "options": {
+        "from": "0",
+        "legendGradientQuality": "high",
+        "showCellBorder": false,
+        "showLegend": true,
+        "showTooltip": true,
+        "showValueIndicator": false,
+        "timeFieldName": "Time",
+        "to": "0",
+        "valueFieldName": "num_events"
+      },
+      "targets": [
+        {
+          "datasource": "ldc",
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT time_bucket('1 hour', observed_at) AS time,\r\n       COALESCE(COUNT(*), 0) AS num_events\r\nFROM events\r\nGROUP BY time\r\nORDER BY time",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "timeColumn": "time",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Events hourly heatmap",
+      "type": "marcusolsson-hourly-heatmap-panel"
     }
   ],
-  "refresh": "5s",
+  "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
   "tags": [],
@@ -458,7 +535,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -483,13 +560,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-12h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Global",
   "uid": "lEO4Wionk",
-  "version": 6,
+  "version": 7,
   "weekStart": ""
 }
