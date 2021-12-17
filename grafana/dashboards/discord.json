@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1639596826804,
+  "iteration": 1639699122795,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -157,7 +157,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^count$/",
+          "fields": "/^events$/",
           "values": false
         },
         "showThresholdLabels": true,
@@ -172,7 +172,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  time_bucket('30 seconds', observed_at) AS time,\n  COUNT(*)\nFROM\n  events\nWHERE\n  $__timeFilter(observed_at) AND meta->>'channel_id' IN ($target_channel)\n  AND event_type IN ($target_event_type)\nGROUP BY time\n",
+          "rawSql": "SELECT\n  time_bucket_gapfill('30 seconds', observed_at) AS time,\n  COALESCE(COUNT(*), 0) AS events\nFROM\n  events\nWHERE\n  $__timeFilter(observed_at) AND meta->>'channel_id' IN ($target_channel)\n  AND event_type IN ($target_event_type)\nGROUP BY time\n",
           "refId": "Events",
           "select": [
             [
@@ -245,7 +245,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n  COUNT(*)\r\nFROM\r\n  events\r\nWHERE $__timeFilter(observed_at) AND meta->>'channel_id' IN ($target_channel) AND event_type IN ($target_event_type)",
+          "rawSql": "SELECT\r\n  COALESCE(COUNT(*), 0)\r\nFROM\r\n  events\r\nWHERE $__timeFilter(observed_at) AND meta->>'channel_id' IN ($target_channel) AND event_type IN ($target_event_type)",
           "refId": "A",
           "select": [
             [
@@ -322,7 +322,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n   COALESCE(name, meta->>'emoji_id') AS \"Reaction\",\r\n    COUNT(*) AS \"Count\"\r\nFROM events\r\nLEFT JOIN emojis ON (meta->>'emoji_id') = id::varchar\r\nWHERE (event_type = 'REACT_ADD' OR event_type = 'REACT_REMOVE') AND $__timeFilter(observed_at)\r\nGROUP BY meta->>'emoji_id', name\r\nORDER BY \"Count\" DESC\r\nLIMIT 5",
+          "rawSql": "SELECT\r\n   COALESCE(name, meta->>'emoji_id') AS \"Reaction\",\r\n   COALESCE(COUNT(*), 0) AS \"Count\"\r\nFROM events\r\nLEFT JOIN emojis ON (meta->>'emoji_id') = id::varchar\r\nWHERE (event_type = 'REACT_ADD' OR event_type = 'REACT_REMOVE') AND $__timeFilter(observed_at)\r\nGROUP BY meta->>'emoji_id', name\r\nORDER BY \"Count\" DESC\r\nLIMIT 5",
           "refId": "A",
           "select": [
             [
@@ -399,7 +399,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\r\n       name as \"Name\",\r\n       COUNT(*) AS \"Events\"\r\nFROM events\r\nINNER JOIN channels ON id = (meta->>'channel_id')::bigint\r\nWHERE $__timeFilter(observed_at)\r\nGROUP BY name, meta->>'channel_id'\r\nORDER BY \"Events\" DESC\r\nLIMIT 5\r\n",
+          "rawSql": "SELECT\r\n       name as \"Name\",\r\n       COALESCE(COUNT(*), 0) AS \"Events\"\r\nFROM events\r\nINNER JOIN channels ON id = (meta->>'channel_id')::bigint\r\nWHERE $__timeFilter(observed_at)\r\nGROUP BY name, meta->>'channel_id'\r\nORDER BY \"Events\" DESC\r\nLIMIT 5\r\n",
           "refId": "A",
           "select": [
             [
@@ -458,7 +458,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -483,13 +483,13 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Global",
   "uid": "lEO4Wionk",
-  "version": 16,
+  "version": 6,
   "weekStart": ""
 }
