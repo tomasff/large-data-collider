@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 1,
-  "iteration": 1639701552384,
+  "iteration": 1639770083376,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -476,7 +476,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT time_bucket('1 hour', observed_at) AS time,\r\n       COALESCE(COUNT(*), 0) AS num_events\r\nFROM events\r\nGROUP BY time\r\nORDER BY time",
+          "rawSql": "SELECT time_bucket('1 hour', observed_at) AS time,\r\n       COALESCE(COUNT(*), 0) AS num_events\r\nFROM events\r\nWHERE $__timeFilter(observed_at) AND meta->>'channel_id' IN ($target_channel) AND event_type IN ($target_event_type)\r\nGROUP BY time\r\nORDER BY time",
           "refId": "A",
           "select": [
             [
@@ -560,7 +560,7 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
