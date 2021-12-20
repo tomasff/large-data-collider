@@ -23,6 +23,7 @@ class EventType(Enum):
     VC_LEAVE = auto()
     REACT_ADD = auto()
     REACT_REMOVE = auto()
+    STATUS_UPDATE = auto()
 
 
 event_types = tuple(name for name, _ in EventType.__members__.items())

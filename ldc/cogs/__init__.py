@@ -5,3 +5,4 @@ from .voice_state_collector import VoiceStateCollector
 from .metric_collector import MetricCollector
 from .channel_collector import ChannelCollector
 from .emoji_collector import EmojiCollector
+from .state_collector import StateCollector
